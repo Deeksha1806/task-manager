@@ -12,6 +12,7 @@ export default function App() {
   const [input, setInput] = useState('')
   const [priority, setPriority] = useState('medium')
   const [dueDate, setDueDate] = useState('')
+  const [dark, setDark] = useState(false)
   useEffect(() => {
   localStorage.setItem('tasks', JSON.stringify(tasks))
 }, [tasks])
@@ -39,8 +40,14 @@ function toggleTask(id) {
   setTasks(tasks.map(t => t.id === id ? { ...t, done: !t.done } : t))
 }
   return (
-    <div className="app">
-      <h1>My Task Manager</h1>
+    <div className="app" data-theme={dark ? 'dark' : 'light'}>
+       <div className="app-header">
+    <h1>My Task Manager</h1>
+    <button className="theme-toggle" onClick={() => setDark(!dark)}>
+      {dark ? '☀️' : '🌙'}
+    </button>
+  </div>
+      
       <div className="task-input">
 
         <input
