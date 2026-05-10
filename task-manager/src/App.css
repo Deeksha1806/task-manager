@@ -3,3 +3,8 @@
 .task-input button { padding: 8px 16px; background: #5340c7; color: white; border: none; border-radius: 8px; cursor: pointer; }
 .task-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .task-item { padding: 12px; background: #f9f9f9; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; }
+/* App.css */
+.delete-btn { background: none; border: none; color: #e24b4a; font-size: 16px; cursor: pointer; padding: 0 4px; }
+/* App.css */
+.task-item input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+.task-item.done span { text-decoration: line-through; color: #aaa; }

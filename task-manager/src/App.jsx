@@ -13,7 +13,9 @@ export default function App() {
   function deleteTask(id) {
   setTasks(tasks.filter(t => t.id !== id))
 }
-
+function toggleTask(id) {
+  setTasks(tasks.map(t => t.id === id ? { ...t, done: !t.done } : t))
+}
   return (
     <div className="app">
       <h1>My Task Manager</h1>
@@ -28,11 +30,11 @@ export default function App() {
       </div>
       <ul className="task-list">
         {tasks.map(task => (
-          <li key={task.id} className="task-item">
- <button className="delete-btn" onClick={() => deleteTask(task.id)}>✕</button>
-            <span>{task.text}</span>
-
-          </li>
+        <li key={task.id} className={`task-item ${task.done ? 'done' : ''}`}>
+  <input type="checkbox" checked={task.done} onChange={() => toggleTask(task.id)} />
+  <span>{task.text}</span>
+  <button className="delete-btn" onClick={() => deleteTask(task.id)}>✕</button>
+</li>
         ))}
       </ul>
     </div>
