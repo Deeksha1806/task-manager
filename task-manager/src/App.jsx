@@ -10,6 +10,7 @@ export default function App() {
 
 
   const [input, setInput] = useState('')
+  const [priority, setPriority] = useState('medium')
   const [dueDate, setDueDate] = useState('')
   useEffect(() => {
   localStorage.setItem('tasks', JSON.stringify(tasks))
@@ -25,9 +26,11 @@ const filtered = tasks.filter(t => {
 
   function addTask() {
     if (!input.trim()) return
-    setTasks([...tasks, { id: Date.now(), text: input, done: false ,dueDate}])
+    setTasks([...tasks, { id: Date.now(), text: input, done: false ,dueDate,priority}])
     setInput('')
     setDueDate('')
+    setPriority('medium')
+
   }
   function deleteTask(id) {
   setTasks(tasks.filter(t => t.id !== id))
@@ -39,6 +42,7 @@ function toggleTask(id) {
     <div className="app">
       <h1>My Task Manager</h1>
       <div className="task-input">
+
         <input
           value={input}
           onChange={e => setInput(e.target.value)}
@@ -50,7 +54,11 @@ function toggleTask(id) {
   value={dueDate}
   onChange={e => setDueDate(e.target.value)}
   style={{ width: '140px' }}
-/>
+/><select value={priority} onChange={e => setPriority(e.target.value)}>
+  <option value="high">🔴 High</option>
+  <option value="medium">🟡 Medium</option>
+  <option value="low">🟢 Low</option>
+</select>
         <button onClick={addTask}>Add</button>
       </div>
       <div className="filter-bar">
@@ -70,6 +78,7 @@ function toggleTask(id) {
   <input type="checkbox" checked={task.done} onChange={() => toggleTask(task.id)} />
   <span>{task.text}</span>
   <span className="due-date">{task.dueDate || 'No date'}</span>
+  <span className={`priority-badge ${task.priority}`}>{task.priority}</span>
   <button className="delete-btn" onClick={() => deleteTask(task.id)}>✕</button>
 </li>
         ))}
