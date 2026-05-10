@@ -4,6 +4,14 @@ import './App.css'
 export default function App() {
   const [tasks, setTasks] = useState([])
   const [input, setInput] = useState('')
+  const [filter, setFilter] = useState('all') // 'all' | 'active' | 'done'
+
+// compute filtered list
+const filtered = tasks.filter(t => {
+  if (filter === 'active') return !t.done
+  if (filter === 'done') return t.done
+  return true
+})
 
   function addTask() {
     if (!input.trim()) return
@@ -28,8 +36,19 @@ function toggleTask(id) {
         />
         <button onClick={addTask}>Add</button>
       </div>
+      <div className="filter-bar">
+  {['all', 'active', 'done'].map(f => (
+    <button
+      key={f}
+      className={filter === f ? 'active' : ''}
+      onClick={() => setFilter(f)}
+    >
+      {f.charAt(0).toUpperCase() + f.slice(1)}
+    </button>
+  ))}
+</div>
       <ul className="task-list">
-        {tasks.map(task => (
+        {filtered.map(task => (
         <li key={task.id} className={`task-item ${task.done ? 'done' : ''}`}>
   <input type="checkbox" checked={task.done} onChange={() => toggleTask(task.id)} />
   <span>{task.text}</span>
