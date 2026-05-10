@@ -10,6 +10,9 @@ export default function App() {
     setTasks([...tasks, { id: Date.now(), text: input, done: false }])
     setInput('')
   }
+  function deleteTask(id) {
+  setTasks(tasks.filter(t => t.id !== id))
+}
 
   return (
     <div className="app">
@@ -26,7 +29,9 @@ export default function App() {
       <ul className="task-list">
         {tasks.map(task => (
           <li key={task.id} className="task-item">
+ <button className="delete-btn" onClick={() => deleteTask(task.id)}>✕</button>
             <span>{task.text}</span>
+
           </li>
         ))}
       </ul>
