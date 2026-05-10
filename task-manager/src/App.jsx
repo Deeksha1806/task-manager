@@ -1,9 +1,18 @@
 import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 export default function App() {
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState(() => {
+  const saved = localStorage.getItem('tasks')
+  return saved ? JSON.parse(saved) : []
+})
+
+
   const [input, setInput] = useState('')
+  useEffect(() => {
+  localStorage.setItem('tasks', JSON.stringify(tasks))
+}, [tasks])
   const [filter, setFilter] = useState('all') // 'all' | 'active' | 'done'
 
 // compute filtered list
