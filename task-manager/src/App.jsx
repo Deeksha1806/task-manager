@@ -10,6 +10,7 @@ export default function App() {
 
 
   const [input, setInput] = useState('')
+  const [dueDate, setDueDate] = useState('')
   useEffect(() => {
   localStorage.setItem('tasks', JSON.stringify(tasks))
 }, [tasks])
@@ -24,8 +25,9 @@ const filtered = tasks.filter(t => {
 
   function addTask() {
     if (!input.trim()) return
-    setTasks([...tasks, { id: Date.now(), text: input, done: false }])
+    setTasks([...tasks, { id: Date.now(), text: input, done: false ,dueDate}])
     setInput('')
+    setDueDate('')
   }
   function deleteTask(id) {
   setTasks(tasks.filter(t => t.id !== id))
@@ -43,6 +45,12 @@ function toggleTask(id) {
           onKeyDown={e => e.key === 'Enter' && addTask()}
           placeholder="Add a task..."
         />
+        <input
+  type="date"
+  value={dueDate}
+  onChange={e => setDueDate(e.target.value)}
+  style={{ width: '140px' }}
+/>
         <button onClick={addTask}>Add</button>
       </div>
       <div className="filter-bar">
@@ -61,6 +69,7 @@ function toggleTask(id) {
         <li key={task.id} className={`task-item ${task.done ? 'done' : ''}`}>
   <input type="checkbox" checked={task.done} onChange={() => toggleTask(task.id)} />
   <span>{task.text}</span>
+  <span className="due-date">{task.dueDate || 'No date'}</span>
   <button className="delete-btn" onClick={() => deleteTask(task.id)}>✕</button>
 </li>
         ))}
